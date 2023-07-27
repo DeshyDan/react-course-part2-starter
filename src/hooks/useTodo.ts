@@ -7,16 +7,16 @@ interface Todo {
     userId: number;
     completed: boolean;
 }
-const useTodo= () => {
+const useTodo = () => {
     const fetchTodos = () =>
-    axios
-        .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
-        .then((res) => res.data);
+        axios
+            .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
+            .then((res) => res.data);
     return useQuery<Todo[], Error>({
         queryKey: ["todos"],
         queryFn: fetchTodos,
+        staleTime: 10 * 10000, // 10 seconds
     });
-    
-}
+};
 
-export default useTodo
+export default useTodo;
