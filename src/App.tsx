@@ -9,6 +9,7 @@ function App() {
     
    
     <TodoForm/>
+    <TodoList/>
    
   <PostList/>
     </>
