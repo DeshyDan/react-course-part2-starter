@@ -1,28 +1,32 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { Todo } from "./useTodo";
 import { CACHE_KEY_TODOS } from "../react-query/constants";
 import APIClient from "../react-query/services/apiClient";
+import todoService, { Todo } from "../react-query/services/todoService";
 
 interface AddTodoContext {
-    previousTodo: Todo[];
+    previousTodos: Todo[];
 }
-const apiClient = new APIClient<Todo>('todosx')
-const useAddTodo = (onAdd:()=> void) => {
+
+const useAddTodo = (onAdd: () => void) => {
     const queryClient = useQueryClient();
 
     return useMutation<Todo, Error, Todo, AddTodoContext>({
-        mutationFn: apiClient.post,
-        onMutate: (newtodo: Todo) => {
-            const previousTodos = queryClient.getQueryData<Todo[]>(CACHE_KEY_TODOS);
+        mutationFn: todoService.post,
 
-            queryClient.setQueryData<Todo[]>(CACHE_KEY_TODOS, (todos =[]) => [
-                newtodo,
+        onMutate: (newTodo: Todo) => {
+            const previousTodos =
+                queryClient.getQueryData<Todo[]>(CACHE_KEY_TODOS) || [];
+
+            queryClient.setQueryData<Todo[]>(CACHE_KEY_TODOS, (todos = []) => [
+                newTodo,
                 ...todos,
             ]);
-            onAdd;
+
+            onAdd();
+
             return { previousTodos };
         },
+
         onSuccess: (savedTodo, newTodo) => {
             //  approach : invalidating the cache
 
@@ -34,14 +38,15 @@ const useAddTodo = (onAdd:()=> void) => {
                 todos?.map((todo) => (todo === newTodo ? savedTodo : todo))
             );
         },
-        onError: (error,newTodo,context) =>{
-            if(!context) return;
-            queryClient.setQueryData<Todo[]>(CACHE_KEY_TODOS,context.previousTodo)
-        }
-        // onError: (error, newTodo, context) => {
-        //     if (!context) return;
-        //     queryClient.setQueryData<Todo[]>(CACHE_KEY_TODOS, context.previousTodo);
-        // },
+
+        onError: (error, newTodo, context) => {
+            if (!context) return;
+
+            queryClient.setQueryData<Todo[]>(
+                CACHE_KEY_TODOS,
+                context.previousTodos
+            );
+        },
     });
 };
 
