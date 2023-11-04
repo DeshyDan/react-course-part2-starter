@@ -1,3 +1,7 @@
+import React, { ReactNode } from "react";
+import tasksContext from "./tasksContext";
+import { useTask } from "./TaskList";
+
 export interface Task {
     id: number;
     title: string;
@@ -23,4 +27,17 @@ const taskReducer = (tasks: Task[], action: TaskAction): Task[] => {
     }
 };
 
-export default taskReducer;
+interface Props {
+    children: ReactNode;
+}
+const TaskProvider = ({ children }: Props) => {
+    const { tasks, dispatch } = useTask();
+
+    return (
+        <tasksContext.Provider value={{ tasks, dispatch }}>
+            {children}
+        </tasksContext.Provider>
+    );
+};
+
+export default TaskProvider;

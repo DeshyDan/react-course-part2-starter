@@ -1,8 +1,5 @@
-import { useContext, useReducer } from "react";
 import LoginStatus from "./LoginStatus";
-import tasksContext from "./contexts/tasksContext";
-import loginStatusReducer from "./reducers/loginStatusReducer";
-import useTask from "./hooks/useTask";
+import { useTask } from "./tasks/TaskList";
 
 const NavBar = () => {
     const { tasks } = useTask();
