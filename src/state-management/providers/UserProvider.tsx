@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode, useReducer } from "react";
-import loginStatusReducer from "./loginStatusReducer";
+import loginStatusReducer from "../reducers/loginStatusReducer";
 import userContext from "../contexts/userContext";
 
 interface Props {
