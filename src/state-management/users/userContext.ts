@@ -1,5 +1,6 @@
 import React, { Dispatch } from "react";
-import { Action } from "../reducers/loginStatusReducer";
+import { Action } from "./UserProvider";
+
 
 interface UserContextType {
     user: string;
