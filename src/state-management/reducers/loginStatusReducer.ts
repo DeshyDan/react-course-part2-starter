@@ -1,4 +1,4 @@
-interface Action {
+export interface Action {
     type: "LOGIN" | "LOGOUT";
     name: string;
 }
