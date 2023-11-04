@@ -1,26 +1,33 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
+import loginStatusReducer from "./reducers/loginStatusReducer";
 
 const LoginStatus = () => {
-  const [user, setUser] = useState('');
+    const [user, dispatch] = useReducer(loginStatusReducer, "");
 
-  if (user)
+    if (user)
+        return (
+            <>
+                <div>
+                    <span className="mx-2">{user}</span>
+                    <a
+                        onClick={() => dispatch({ type: "LOGOUT", name: "" })}
+                        href="#"
+                    >
+                        Logout
+                    </a>
+                </div>
+            </>
+        );
     return (
-      <>
         <div>
-          <span className="mx-2">{user}</span>
-          <a onClick={() => setUser('')} href="#">
-            Logout
-          </a>
+            <a
+                onClick={() => dispatch({ type: "LOGIN", name: "Deshy" })}
+                href="#"
+            >
+                Login
+            </a>
         </div>
-      </>
     );
-  return (
-    <div>
-      <a onClick={() => setUser('mosh.hamedani')} href="#">
-        Login
-      </a>
-    </div>
-  );
 };
 
 export default LoginStatus;
