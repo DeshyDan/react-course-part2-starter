@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import tasksContext from "./tasksContext";
 import { useTask } from "./TaskList";
 
@@ -31,7 +31,7 @@ interface Props {
     children: ReactNode;
 }
 const TaskProvider = ({ children }: Props) => {
-    const { tasks, dispatch } = useTask();
+    const { tasks, dispatch } = useContext(tasksContext);
 
     return (
         <tasksContext.Provider value={{ tasks, dispatch }}>

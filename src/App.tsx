@@ -1,16 +1,18 @@
 import "./App.css";
 
+import { TaskList, TaskProvider } from "./state-management/tasks";
 import { UserProvider } from "./state-management/users";
-import { TaskProvider } from "./state-management/tasks";
-import HomePage from "./routing/HomePage";
-import NavBar from "./routing/NavBar";
+
+import Counter from "./state-management/counter/Counter";
+import HomePage from "./state-management/HomePage";
+import NavBar from "./state-management/NavBar";
 
 function App() {
     return (
         <UserProvider>
             <TaskProvider>
-                <NavBar />
-                <HomePage />
+                <Counter />
+         <NavBar/>
             </TaskProvider>
         </UserProvider>
     );
